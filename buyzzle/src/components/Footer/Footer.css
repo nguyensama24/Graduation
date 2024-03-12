@@ -1,0 +1,25 @@
+.footer-bg {
+  background-image: url("../../assets/Images/bgFooter.jpg");
+}
+
+@media screen and (max-width: 768px) {
+  .grid-cols-2 {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+  }
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+.txt-content p {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

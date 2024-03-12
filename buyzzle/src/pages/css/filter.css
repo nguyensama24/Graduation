@@ -1,0 +1,40 @@
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+}
+
+/* Kiểu dáng nút trang */
+.page {
+    display: inline-block;
+    padding: 5px 10px;
+    margin: 5px;
+    text-decoration: none;
+    color: #333;
+}
+
+/* Màu nền khi hover qua nút trang */
+.page:hover {
+    background-color: #FFEAE9;
+    color:#EA4B48
+}
+
+/* Kiểu dáng nút Prev và Next */
+.prev,
+.next {
+    background-color: #FFEAE9;
+    display: inline-block;
+    padding: 5px 10px;
+    margin: 5px;
+    text-decoration: none;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+}
+
+/* Màu nền khi hover qua nút Prev và Next */
+.prev:hover,
+.next:hover {
+    background-color: #FFAAAF;
+    color: #ffffff;
+}

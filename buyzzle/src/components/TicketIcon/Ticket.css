@@ -1,0 +1,81 @@
+#tic {
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 220px;
+}
+
+#tic div {
+    display: inline-block;
+    position: relative;
+}
+
+#tic div p {
+    position: absolute;
+    background: #62306d;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+#l {
+    background: #f7ec7d;
+    width: 141px;
+    height: 100px;
+    margin-right: -5px;
+    margin-left: 10px;
+}
+
+#r {
+    width: 60px;
+    height: 100px;
+    background: #e38f66;
+}
+
+#tl {
+    top: -36px;
+    left: -20px;
+}
+
+#bl {
+    bottom: -36px;
+    left: -20px;
+}
+
+#tr {
+    top: -36px;
+    right: -20px;
+}
+
+#br {
+    bottom: -36px;
+    right: -20px;
+}
+
+#tic div p#mu {
+    top: -26px;
+    right: -8.5px;
+    z-index: 1;
+    width: 20px;
+    height: 20px;
+}
+
+#tic div p#ml {
+    bottom: -26px;
+    right: -8.5px;
+    z-index: 1;
+    width: 20px;
+    height: 20px;
+}
+
+/* Ignore*/
+
+.anchor {
+    position: fixed;
+    top: 0;
+    right: 0;
+    font-weight: bold;
+    padding: 12px;
+    color: #fff;
+}

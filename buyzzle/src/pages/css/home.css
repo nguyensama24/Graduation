@@ -1,0 +1,37 @@
+.bgFlashSale {
+  background: url("../src/assets/PNG/flashSaleSoild.png"), no-repeat;
+}
+
+.coupon {
+  background-color: #ea4b48;
+}
+
+.figure {
+  overflow: hidden;
+}
+.figure img {
+  -webkit-transform: scale(1);
+  transform: scale(1);
+  -webkit-transition: 0.3s ease-in-out;
+  transition: 0.3s ease-in-out;
+}
+.figure:hover img {
+  -webkit-transform: scale(1.1);
+  transform: scale(1.1);
+}
+
+/* .banner_x{
+
+} */
+
+@media screen and (max-width: 1024px) {
+  .banner {
+    margin: 0 auto;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .banner {
+    max-width: fit-content;
+  }
+}

@@ -1,0 +1,382 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                   Int            @id @default(autoincrement())
+  email                String         @unique
+  username             String?        @unique
+  password             String?
+  verify               Boolean        @default(false)
+  Token                Token[]
+  name                 String?
+  phonenumber          String?
+  image                String?
+  createdAt            DateTime       @default(now())
+  updateAt             DateTime       @default(now())
+  dateOfBirth          DateTime?
+  sex                  Boolean?
+  addresstype          String?
+  address              String?
+  specificaddress      String?
+  town                 String?
+  refresh_token        String?
+  forgotpassword_token String?        @db.VarChar(300)
+  role                 Int?
+  fK_Role              Role?          @relation(fields: [role], references: [id])
+  cart                 Cart[]
+  UserImage            UserImage[]
+  Rating               Rating[]
+  deletedAt            DateTime?
+  sender               Message[]      @relation("Sender")
+  receiver             Message[]      @relation("Receiver")
+  Order                Order[]
+  invoices             Invoice[]
+  savedVouchers        SavedVoucher[]
+  usedVouchers         Voucher[]      @relation("UsedBy")
+  Notification         Notification[]
+}
+
+model ShippingUnit {
+  id            Int             @id @default(autoincrement())
+  name          String?
+  username      String?         @unique
+  email         String?
+  password      String?
+  city          String?
+  address       String?
+  phonenumber   String?
+  sex           Boolean?
+  dateofbirth   DateTime?
+  createdAt     DateTime?       @default(now())
+  updatedAt     DateTime?       @default(now())
+  deletedAt     DateTime?
+  ShippingImage ShippingImage[]
+}
+
+model ShippingImage {
+  id               Int           @id @default(autoincrement())
+  url              String?       @db.VarChar(2000)
+  idshipping       Int?          @unique
+  fk_shippingImage ShippingUnit? @relation(fields: [idshipping], references: [id], onDelete: Cascade)
+  deletedAt        DateTime?
+}
+
+model Voucher {
+  id        Int            @id @default(autoincrement())
+  code      String?
+  discount  Int?
+  quantity  Int?
+  startDay  DateTime?
+  endDay    DateTime?
+  used      Int?           @default(0)
+  createdAt DateTime?      @default(now())
+  updatedAt DateTime?      @default(now())
+  deletedAt DateTime?
+  savedBy   SavedVoucher[]
+  usedBy    User[]         @relation("UsedBy")
+}
+
+model SavedVoucher {
+  id        Int       @id @default(autoincrement())
+  userId    Int
+  voucherId Int
+  createdAt DateTime? @default(now())
+  used      Boolean   @default(false)
+
+  user    User    @relation(fields: [userId], references: [id])
+  voucher Voucher @relation(fields: [voucherId], references: [id], onDelete: Cascade)
+}
+
+model UserImage {
+  id           Int       @id @unique @default(autoincrement())
+  url          String?   @db.VarChar(2000)
+  iduser       Int       @unique
+  fK_UserImage User?     @relation(fields: [iduser], references: [id], onDelete: Cascade)
+  deletedAt    DateTime?
+}
+
+model Role {
+  id        Int       @id @default(autoincrement())
+  name      String?
+  createdAt DateTime
+  updatedAt DateTime
+  User      User[]
+  deletedAt DateTime?
+}
+
+model Token {
+  id           Int       @id @default(autoincrement())
+  userid       Int
+  fk_userTOken User      @relation(fields: [userid], references: [id])
+  token        String
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @default(now())
+  deletedAt    DateTime?
+}
+
+model Product {
+  id            Int                    @id @default(autoincrement())
+  name          String?
+  price         Int?
+  rate          Int?
+  pricesale     Int?
+  sellingPrice  Int?
+  discount      Int?
+  soldcount     Int?                   @default(0)
+  quantity      Int?
+  description   String?                @db.VarChar(15000)
+  status        String?
+  date          DateTime?              @default(now())
+  // productId    Int?
+  deletedAt     DateTime?
+  createdAt     DateTime?              @default(now())
+  updatedAt     DateTime?              @default(now())
+  categoryID    Int?
+  subcateId     Int?
+  fK_category   Category?              @relation(fields: [categoryID], references: [id])
+  fK_subcateLv2 subCategoriesMultiLv2? @relation(fields: [subcateId], references: [id])
+  OrderDetail   OrderDetail[]
+  ProductImage  ProductImage[]
+  cart          ItemCart[]
+  Rating        Rating[]
+}
+
+model Category {
+  id            Int                     @id @default(autoincrement())
+  name          String?
+  date          DateTime?               @default(now())
+  updatedAt     DateTime?               @default(now())
+  createdAt     DateTime?               @default(now())
+  image         String?
+  products      Product[]
+  subCategories subCategoriesMultiLv2[] @relation("CategorySubcategories")
+  deletedAt     DateTime?
+
+  @@index([name])
+}
+
+model subCategoriesMultiLv2 {
+  id         Int       @id @default(autoincrement())
+  categoryid Int
+  name       String
+  date       DateTime?
+  createAt   DateTime?
+  productId  Product[]
+  category   Category  @relation("CategorySubcategories", fields: [categoryid], references: [id])
+
+  @@index([name])
+}
+
+model Cart {
+  id        Int              @id @default(autoincrement())
+  user      User             @relation(fields: [userId], references: [id])
+  userId    Int
+  item      ItemCart[]
+  subtotal  Int
+  invoices  InvoiceDetails[]
+  deletedAt DateTime?
+}
+
+model ItemCart {
+  id         Int       @id @default(autoincrement())
+  product    Product   @relation(fields: [productid], references: [id])
+  productid  Int
+  cartschema Cart      @relation(fields: [cartid], references: [id])
+  cartid     Int
+  quantity   Int?      @default(1)
+  price      Int?
+  total      Int?
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime? @default(now())
+  deletedAt  DateTime?
+}
+
+model ProductImage {
+  id               Int       @id @default(autoincrement())
+  url              String?   @db.VarChar(2000)
+  idproduct        Int?
+  fK_propductImage Product?  @relation(fields: [idproduct], references: [id], onDelete: Cascade)
+  deletedAt        DateTime?
+}
+
+model CommentImage {
+  id              Int       @id @default(autoincrement())
+  url             String?   @db.VarChar(2000)
+  idcomment       Int?
+  fk_commentImage Rating?   @relation(fields: [idcomment], references: [id], onDelete: Cascade)
+  deletedAt       DateTime?
+}
+
+model Rating {
+  id           Int            @id @default(autoincrement())
+  idproduct    Int?
+  product      Product?       @relation(fields: [idproduct], references: [id])
+  iduser       Int?
+  user         User?          @relation(fields: [iduser], references: [id])
+  adminId      Int?
+  admin        Admin?         @relation(fields: [adminId], references: [id])
+  ratingValue  Int?
+  comment      String?        @db.VarChar(2000)
+  repComment   String?        @db.VarChar(2000)
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @default(now())
+  CommentImage CommentImage[]
+  deletedAt    DateTime?
+}
+
+model Order {
+  id            Int            @id @default(autoincrement())
+  userId        Int?
+  name          String?
+  address       String?
+  phoneNumber   String?
+  status        Int?
+  note          String?        @db.VarChar(2000)
+  invoice       String?
+  subtotal      Int?
+  shipping      Int?
+  discount      Int?
+  amountTotal   Int?
+  paymentMethod String?
+  createdAt     DateTime?      @default(now())
+  updatedAt     DateTime?      @default(now())
+  deletedAt     DateTime?
+  OrderDetail   OrderDetail[]
+  User          User?          @relation(fields: [userId], references: [id])
+  Notification  Notification[]
+}
+
+model OrderDetail {
+  id           Int       @id @default(autoincrement())
+  orderId      Int?
+  productId    Int?
+  name         String?
+  image        String?
+  price        Int?
+  quantity     Int?
+  total        Int?
+  ratingAt     DateTime?
+  createdAt    DateTime? @default(now())
+  updatedAt    DateTime? @default(now())
+  deletedAt    DateTime?
+  order        Order?    @relation(fields: [orderId], references: [id])
+  productOrder Product?  @relation(fields: [productId], references: [id])
+}
+
+model Invoice {
+  id             Int              @id @default(autoincrement())
+  iduser         Int
+  user           User             @relation(fields: [iduser], references: [id])
+  invoiceDetails InvoiceDetails[]
+}
+
+model InvoiceDetails {
+  id        Int     @id @default(autoincrement())
+  idInvoice Int
+  cartId    Int
+  cart      Cart    @relation(fields: [cartId], references: [id])
+  invoice   Invoice @relation(fields: [idInvoice], references: [id])
+}
+
+model Admin {
+  id          Int          @id @default(autoincrement())
+  email       String?
+  password    String?
+  username    String?      @unique
+  name        String?
+  sex         Boolean?
+  phonenumber String?
+  dateofbirth DateTime?
+  AdminImage  AdminImage[]
+  ratings     Rating[]
+  // sentMessages ChatMessage[]@relation("SentMessagess")
+  // receivedMessages ChatMessage[] @relation("ReceivedMessagess")
+}
+
+model AdminImage {
+  id            Int       @id @default(autoincrement())
+  url           String?   @db.VarChar(2000)
+  idadmin       Int?      @unique
+  fk_adminImage Admin?    @relation(fields: [idadmin], references: [id], onDelete: Cascade)
+  deletedAt     DateTime?
+}
+
+model Message {
+  id         Int      @id @default(autoincrement())
+  content    String
+  sender     User     @relation("Sender", fields: [senderId], references: [id])
+  senderId   Int
+  receiver   User     @relation("Receiver", fields: [receiverId], references: [id])
+  receiverId Int
+  createdAt  DateTime @default(now())
+}
+
+model Notification {
+  id       Int       @id @default(autoincrement())
+  userId   Int?
+  orderId  Int
+  message  String?
+  date     DateTime  @default(now())
+  status   Int?
+  seen     Boolean?
+  deleteAt DateTime?
+  fk_user  User?     @relation(fields: [userId], references: [id])
+  fk_order Order     @relation(fields: [orderId], references: [id])
+}
+
+model ImageLogo {
+  id         Int       @id @default(autoincrement())
+  image      String?
+  linkgoogle String?
+  createdAt  DateTime? @default(now())
+  updatedAt  DateTime? @default(now())
+}
+
+model ImageBanner {
+  id         Int       @id @default(autoincrement())
+  image      String?
+  linkgoogle String?
+  createdAt  DateTime? @default(now())
+  updatedAt  DateTime? @default(now())
+}
+
+model ImageBannerHome {
+  id         Int       @id @default(autoincrement())
+  image      String?
+  linkgoogle String?
+  createdAt  DateTime? @default(now())
+  updatedAt  DateTime? @default(now())
+}
+
+model ImageLogoHome {
+  id         Int       @id @default(autoincrement())
+  image      String?
+  linkgoogle String?
+  createdAt  DateTime? @default(now())
+  updatedAt  DateTime? @default(now())
+}
+
+model ImageLogoHome1 {
+  id         Int       @id @default(autoincrement())
+  image      String?
+  linkgoogle String?
+  createdAt  DateTime? @default(now())
+  updatedAt  DateTime? @default(now())
+}
+
+model ImageDetail {
+  id         Int       @id @default(autoincrement())
+  image      String?
+  linkgoogle String?
+  createdAt  DateTime? @default(now())
+  updatedAt  DateTime? @default(now())
+}

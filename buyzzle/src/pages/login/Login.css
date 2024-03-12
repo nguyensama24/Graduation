@@ -1,0 +1,61 @@
+.login-bg {
+  background-image: url("../../assets/Images/bgRegister.png");
+}
+
+.register-bg {
+  background-image: url("../../assets/Images/bgRegister.png");
+  /* max-height: 1083px;
+      max-width: 963px;*/
+}
+
+@font-face {
+  font-family: "Inter";
+  src: url("../../assets/Fonts/Inter.ttf") format("truetype");
+}
+
+.loginform-bg {
+  background-color: #ffffff;
+}
+
+.login-a {
+  margin-bottom: 50px;
+  text-align: center;
+  color: #ffaaaf;
+  font-weight: 700;
+  font-size: 50px;
+  line-height: 38px;
+}
+
+.login-a2 {
+  color: #425466;
+}
+
+.login-a3 {
+  color: #718096;
+}
+
+.login-a4 {
+  font-family: "Inter", sans-serif;
+  font-size: 16px;
+  color: #4c4c4c;
+  line-height: 16.94px;
+  font-weight: 500;
+  border-radius: 6px;
+}
+
+.login-input {
+  border: 1px solid #ffaaaf;
+  border-radius: 6px;
+}
+
+.login-a2 {
+  width: 424px;
+  height: 18px;
+  top: 672px;
+  left: 1196px;
+  gap: 24px;
+}
+
+.h {
+  width: 100%;
+}

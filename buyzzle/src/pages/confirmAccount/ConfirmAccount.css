@@ -1,0 +1,100 @@
+.register-bg {
+  /* background-image: url("../../assets/PNG/NewProject.png"); */
+  /* max-height: 1083px;
+    max-width: 963px;*/
+  height: 1083px;
+}
+
+.logoSlogan {
+  background-image: url("../../assets/PNG/LogoSlogan.png");
+}
+
+.registerform-bg {
+  background-color: #ffffff;
+}
+
+.font-xacnhan {
+  color: var(--Color-card-2, #00b207);
+  font-family: Arial;
+  font-size: 36px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 38px;
+  text-align: center;
+  /* 105.556% */
+}
+
+.registration-form {
+  /* Thiết lập kiểu cho phần tử gốc của form */
+  font-family: Arial, sans-serif;
+  font-weight: 500;
+  size: 14px;
+}
+
+.img {
+  max-width: "100%";
+  max-height: "100%";
+  display: block;
+}
+
+/* Các kiểu cho phần tử input */
+.registration-form .input {
+  width: 424px;
+  height: 46px;
+  padding: 10px;
+  /* margin-bottom: 15px; */
+  border: 1px solid #ffaaaf;
+  border-radius: 6px;
+}
+
+/* Kiểu cho phần tử button */
+
+/* Kiểu cho tiêu đề form */
+.registration-form h2 {
+  margin-bottom: 15px;
+  text-align: center;
+  color: #ffaaaf;
+  font-weight: 700;
+  font-size: 48px;
+  line-height: 38px;
+}
+
+/* Kiểu cho checkbox */
+.custom-checkbox {
+  width: 20px;
+  height: 20px;
+  appearance: none;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-right: 5px;
+  position: relative;
+  cursor: pointer;
+}
+
+.checkbox-container {
+  display: flex;
+  align-items: center;
+}
+
+.checkbox-container label {
+  margin-left: 5px;
+  /* Khoảng cách giữa checkbox và label */
+}
+
+/* Kiểu cho checkbox khi đã được chọn */
+.custom-checkbox:checked {
+  background-color: #ea4b48;
+  border-color: #ffaaaf;
+}
+
+/* Kiểu cho dấu check (tick) trong checkbox khi đã được chọn */
+.custom-checkbox:checked::before {
+  content: "\2713";
+  /* Dấu check (tick) Unicode */
+  color: white;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 16px;
+}
